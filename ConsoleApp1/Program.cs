@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ShareMemoryP
+namespace ConsoleApp1
 {
-    public partial class Form1 : Form
+    class Program
     {
-        public Form1()
+        static void Main(string[] args)
         {
-            InitializeComponent();
             try
             {
                 Console.Write("按 Enter 開始讀取及回應…");
@@ -53,12 +48,6 @@ namespace ShareMemoryP
             {
                 Console.WriteLine("Memory-mapped file does not exist.");
             }
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
