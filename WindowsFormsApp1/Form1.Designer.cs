@@ -180,7 +180,7 @@
             this.btnGetValue.TabIndex = 9;
             this.btnGetValue.Text = "Get Value";
             this.btnGetValue.UseVisualStyleBackColor = true;
-            this.btnGetValue.Click += new System.EventHandler(this.button3_Click_1);
+            this.btnGetValue.Click += new System.EventHandler(this.btnGetValue_Click_1);
             // 
             // txtWordLength
             // 
@@ -240,7 +240,7 @@
             this.button4.TabIndex = 9;
             this.button4.Text = "Set Value";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.btnSetValue_Click);
             // 
             // txtSetValue
             // 
@@ -268,7 +268,7 @@
             this.btnInitialSM.TabIndex = 14;
             this.btnInitialSM.Text = "Initial SM (For Semi)";
             this.btnInitialSM.UseVisualStyleBackColor = true;
-            this.btnInitialSM.Click += new System.EventHandler(this.button5_Click);
+            this.btnInitialSM.Click += new System.EventHandler(this.btnInitialSM_Click);
             // 
             // groupBox3
             // 

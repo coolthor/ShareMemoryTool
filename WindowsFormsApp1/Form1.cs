@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Runtime.Remoting.Messaging;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        private int OFFSET = sizeof(int);
+
+        private Mutex mutex;
         public Form1()
         {
             InitializeComponent();
+            bool mutexCreated;
+            mutex = mutex == null
+                ? new Mutex(true, "mutex", out mutexCreated)
+                : mutex;
         }
 
         private List<int> newPLCWordData;
@@ -24,16 +31,19 @@ namespace WindowsFormsApp1
                 string mapName = $"Global\\{stockID.Text}{suffix}";
                 using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
                 {
+
+                    mutex.WaitOne();
                     using (MemoryMappedViewStream stream = mmf.CreateViewStream())
                     {
                         using (var br = new BinaryReader(stream))
                         {
                             newPLCWordData = new List<int>();
-                            br.BaseStream.Seek(4, SeekOrigin.Begin);
+                            br.BaseStream.Seek(OFFSET, SeekOrigin.Begin);
                             while (br.BaseStream.Position < br.BaseStream.Length)
                                 newPLCWordData.Add(br.ReadInt32());
                         }
                     }
+                    mutex.ReleaseMutex();
                 }
                 lblLastReadTime.Text = DateTime.Now.ToString($"yyyy-MM-dd HH:mm:ss");
             }
@@ -53,7 +63,7 @@ namespace WindowsFormsApp1
         }
         
 
-        private void button3_Click_1(object sender, EventArgs e)
+        private void btnGetValue_Click_1(object sender, EventArgs e)
         {
             readSM();
             if (newPLCWordData.Count==0) return;
@@ -89,7 +99,7 @@ namespace WindowsFormsApp1
             listBox1.Items.Add(result);
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void btnInitialSM_Click(object sender, EventArgs e)
         {
             string suffix = txtSuffix.Text.Length == 0 ? "-WordData" : txtSuffix.Text;
             string mapName = $"Global\\{stockID.Text}{suffix}";
@@ -110,7 +120,7 @@ namespace WindowsFormsApp1
             readSM();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnSetValue_Click(object sender, EventArgs e)
         {
             int index = 0;
 
@@ -127,15 +137,18 @@ namespace WindowsFormsApp1
                 string mapName = $"Global\\{stockID.Text}{suffix}";
                 using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
                 {
+                    mutex.WaitOne();
                     using (MemoryMappedViewStream stream = mmf.CreateViewStream())
                     {
                         var writer = new BinaryWriter(stream);
+                        
                         writer.Write(0);
                         for (int i = 0; i < newPLCWordData.Count; i++)
                         {
                             writer.Write(newPLCWordData[i]);
                         }
                     }
+                    mutex.ReleaseMutex();
                 }
                 lblLastReadTime.Text = DateTime.Now.ToString($"yyyy-MM-dd HH:mm:ss");
             }
