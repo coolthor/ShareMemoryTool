@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{1AE4D7DF-FA31-45B6-A20C-E142D7258799}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTool", "WindowsFormsApp1\SMTool.csproj", "{1AE4D7DF-FA31-45B6-A20C-E142D7258799}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30F1E229-6DD5-4ED9-8834-E83181B24A08}
 	EndGlobalSection
 EndGlobal

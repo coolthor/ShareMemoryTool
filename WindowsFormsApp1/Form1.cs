@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -113,9 +114,10 @@ namespace WindowsFormsApp1
         {
             int index = 0;
 
-            int.TryParse(txtSetIndex.Text, out index);
+            if(!int.TryParse(txtSetIndex.Text, out index)) return;
+
             int value = 0;
-            int.TryParse(txtSetValue.Text, out value);
+            if(!int.TryParse(txtSetValue.Text, out value)) return;
 
             newPLCWordData[index] = value;
 

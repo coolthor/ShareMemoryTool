@@ -318,7 +318,7 @@
             this.Controls.Add(this.btnReadData);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
-            this.Text = "ShareMemoryReader v0.1 by Thor Lin";
+            this.Text = "ShareMemoryTool v0.1 by Thor Lin";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
