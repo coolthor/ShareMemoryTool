@@ -29,12 +29,9 @@
         private void InitializeComponent()
         {
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.btnReadData = new System.Windows.Forms.Button();
-            this.stockID = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.txtSuffix = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblLastReadTime = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -53,6 +50,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtSize = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtOffset = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -67,27 +66,9 @@
             this.listBox1.Size = new System.Drawing.Size(588, 439);
             this.listBox1.TabIndex = 0;
             // 
-            // btnReadData
-            // 
-            this.btnReadData.Location = new System.Drawing.Point(618, 494);
-            this.btnReadData.Name = "btnReadData";
-            this.btnReadData.Size = new System.Drawing.Size(208, 31);
-            this.btnReadData.TabIndex = 1;
-            this.btnReadData.Text = "Read Data";
-            this.btnReadData.UseVisualStyleBackColor = true;
-            this.btnReadData.Visible = false;
-            // 
-            // stockID
-            // 
-            this.stockID.Location = new System.Drawing.Point(485, 9);
-            this.stockID.Name = "stockID";
-            this.stockID.Size = new System.Drawing.Size(115, 25);
-            this.stockID.TabIndex = 4;
-            this.stockID.Text = "H1MS500";
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(618, 441);
+            this.button2.Location = new System.Drawing.Point(618, 469);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(208, 42);
             this.button2.TabIndex = 5;
@@ -97,29 +78,20 @@
             // 
             // txtSuffix
             // 
-            this.txtSuffix.Location = new System.Drawing.Point(145, 9);
+            this.txtSuffix.Location = new System.Drawing.Point(170, 9);
             this.txtSuffix.Name = "txtSuffix";
-            this.txtSuffix.Size = new System.Drawing.Size(242, 25);
+            this.txtSuffix.Size = new System.Drawing.Size(430, 25);
             this.txtSuffix.TabIndex = 7;
-            this.txtSuffix.Text = "-WordData";
+            this.txtSuffix.Text = "H1MS100-WordData";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 15);
+            this.label1.Size = new System.Drawing.Size(141, 15);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Sharememory 後綴:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(404, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 15);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Stock ID:";
+            this.label1.Text = "Sharememory map file:";
             // 
             // label3
             // 
@@ -147,7 +119,7 @@
             this.groupBox1.Controls.Add(this.btnGetValue);
             this.groupBox1.Controls.Add(this.txtWordLength);
             this.groupBox1.Controls.Add(this.txtStartIndex);
-            this.groupBox1.Location = new System.Drawing.Point(618, 115);
+            this.groupBox1.Location = new System.Drawing.Point(618, 143);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(208, 157);
             this.groupBox1.TabIndex = 12;
@@ -188,7 +160,7 @@
             this.txtWordLength.Name = "txtWordLength";
             this.txtWordLength.Size = new System.Drawing.Size(98, 25);
             this.txtWordLength.TabIndex = 8;
-            this.txtWordLength.Text = "2";
+            this.txtWordLength.Text = "1";
             this.txtWordLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtStartIndex
@@ -207,7 +179,7 @@
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.txtSetValue);
             this.groupBox2.Controls.Add(this.txtSetIndex);
-            this.groupBox2.Location = new System.Drawing.Point(618, 278);
+            this.groupBox2.Location = new System.Drawing.Point(618, 306);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(208, 157);
             this.groupBox2.TabIndex = 13;
@@ -262,7 +234,7 @@
             // 
             // btnInitialSM
             // 
-            this.btnInitialSM.Location = new System.Drawing.Point(17, 55);
+            this.btnInitialSM.Location = new System.Drawing.Point(11, 63);
             this.btnInitialSM.Name = "btnInitialSM";
             this.btnInitialSM.Size = new System.Drawing.Size(185, 26);
             this.btnInitialSM.TabIndex = 14;
@@ -277,7 +249,7 @@
             this.groupBox3.Controls.Add(this.btnInitialSM);
             this.groupBox3.Location = new System.Drawing.Point(618, 9);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(208, 100);
+            this.groupBox3.Size = new System.Drawing.Size(208, 128);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Create SM";
@@ -285,7 +257,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 27);
+            this.label8.Location = new System.Drawing.Point(18, 35);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(35, 15);
             this.label8.TabIndex = 16;
@@ -293,29 +265,46 @@
             // 
             // txtSize
             // 
-            this.txtSize.Location = new System.Drawing.Point(104, 24);
+            this.txtSize.Location = new System.Drawing.Point(98, 32);
             this.txtSize.Name = "txtSize";
             this.txtSize.Size = new System.Drawing.Size(98, 25);
             this.txtSize.TabIndex = 15;
             this.txtSize.Text = "2800";
             this.txtSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(422, 43);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(46, 15);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "Offset:";
+            // 
+            // txtOffset
+            // 
+            this.txtOffset.Location = new System.Drawing.Point(502, 40);
+            this.txtOffset.Name = "txtOffset";
+            this.txtOffset.Size = new System.Drawing.Size(98, 25);
+            this.txtOffset.TabIndex = 17;
+            this.txtOffset.Text = "0";
+            this.txtOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 524);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.txtOffset);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblLastReadTime);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtSuffix);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.stockID);
-            this.Controls.Add(this.btnReadData);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
             this.Text = "ShareMemoryTool v0.1 by Thor Lin";
@@ -333,12 +322,9 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button btnReadData;
-        private System.Windows.Forms.TextBox stockID;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox txtSuffix;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblLastReadTime;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -357,6 +343,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtSize;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtOffset;
     }
 }
 

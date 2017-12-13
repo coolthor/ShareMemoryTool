@@ -9,7 +9,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        private int OFFSET = sizeof(int);
+        private int OFFSET = 0;
 
         private Mutex mutex;
         public Form1()
@@ -27,11 +27,10 @@ namespace WindowsFormsApp1
         {
             try
             {
-                string suffix = txtSuffix.Text.Length == 0 ? "-WordData" : txtSuffix.Text;
-                string mapName = $"Global\\{stockID.Text}{suffix}";
+                OFFSET = int.TryParse(txtOffset.Text, out OFFSET) ? OFFSET : 0;
+                string mapName = $"Global\\{txtSuffix.Text}";
                 using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
                 {
-
                     mutex.WaitOne();
                     using (MemoryMappedViewStream stream = mmf.CreateViewStream())
                     {
@@ -61,12 +60,18 @@ namespace WindowsFormsApp1
         {
             listBox1.Items.Clear();
         }
-        
+
 
         private void btnGetValue_Click_1(object sender, EventArgs e)
         {
+            if (!checkOFFSET())
+            {
+                MessageBox.Show("In this case OFFSET, must sizeof(int) * count");
+                return;
+            }
             readSM();
-            if (newPLCWordData.Count==0) return;
+            
+            if (newPLCWordData==null||newPLCWordData.Count==0) return;
             int startIndex;
             if (!int.TryParse(txtStartIndex.Text, out startIndex))
                 txtStartIndex.Text = "0";
@@ -96,13 +101,12 @@ namespace WindowsFormsApp1
                     result = newPLCWordData[startIndex+1] * 65536 + newPLCWordData[startIndex];
                     break;
             }
-            listBox1.Items.Add(result);
+            listBox1.Items.Add($"[Index:{txtStartIndex.Text} | Length:{txtWordLength.Text}] -> value:{result}");
         }
 
         private void btnInitialSM_Click(object sender, EventArgs e)
         {
-            string suffix = txtSuffix.Text.Length == 0 ? "-WordData" : txtSuffix.Text;
-            string mapName = $"Global\\{stockID.Text}{suffix}";
+            string mapName = $"Global\\{txtSuffix.Text}";
             int SM_SIZE = 2800;
             if (!int.TryParse(txtSize.Text, out SM_SIZE))
             {
@@ -122,6 +126,12 @@ namespace WindowsFormsApp1
 
         private void btnSetValue_Click(object sender, EventArgs e)
         {
+            if (!checkOFFSET())
+            {
+                MessageBox.Show("In this case OFFSET, must sizeof(int) * count");
+                return;
+            }
+
             int index = 0;
 
             if(!int.TryParse(txtSetIndex.Text, out index)) return;
@@ -129,21 +139,22 @@ namespace WindowsFormsApp1
             int value = 0;
             if(!int.TryParse(txtSetValue.Text, out value)) return;
 
+            if(newPLCWordData==null)
+                btnInitialSM.PerformClick();
             newPLCWordData[index] = value;
 
             try
             {
-                string suffix = txtSuffix.Text.Length == 0 ? "-WordData" : txtSuffix.Text;
-                string mapName = $"Global\\{stockID.Text}{suffix}";
+                OFFSET = int.TryParse(txtOffset.Text, out OFFSET) ? OFFSET : 0;
+                string mapName = $"Global\\{txtSuffix.Text}";
                 using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
                 {
                     mutex.WaitOne();
                     using (MemoryMappedViewStream stream = mmf.CreateViewStream())
                     {
+                        stream.Seek(OFFSET, SeekOrigin.Begin);
                         var writer = new BinaryWriter(stream);
-                        
-                        writer.Write(0);
-                        for (int i = 0; i < newPLCWordData.Count; i++)
+                        for (int i = 0; i < newPLCWordData.Count-(OFFSET/sizeof(int)); i++)
                         {
                             writer.Write(newPLCWordData[i]);
                         }
@@ -161,6 +172,12 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool checkOFFSET()
+        {
+            int.TryParse(txtOffset.Text, out OFFSET);
+            return (OFFSET % sizeof(int) == 0);
         }
     }
 }
